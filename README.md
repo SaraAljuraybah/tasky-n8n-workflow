@@ -40,4 +40,6 @@ All tasks are stored in Google Sheets and each user only sees their own tasks.
 - This project was built for learning and experimentation
 - Feel free to fork and customize ✨
 
+## 🔄 n8n Workflow
+
 ![n8n Workflow](https://raw.githubusercontent.com/SaraAljuraybah/tasky-n8n-workflow/refs/heads/main/tasky-n8n-workflow.png)
