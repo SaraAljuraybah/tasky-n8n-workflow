@@ -1,0 +1,570 @@
+{
+  "name": "Tasky",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -288,
+        240
+      ],
+      "id": "52689527-9c07-43ca-ab13-1087a2648f80",
+      "name": "Telegram Trigger",
+      "webhookId": "b4af1d80-d796-42fc-9243-89b3e7e9c035",
+      "credentials": {
+        "telegramApi": {
+          "id": "J8ueyaRLQoYkYCwC",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "✅ Tasky is online! Type /help to see commands",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        784,
+        -96
+      ],
+      "id": "55ce844a-f73e-48d7-96c3-b20d499da9bc",
+      "name": "Send a text message",
+      "webhookId": "ddc8a790-dc95-4174-96f4-ba850422f137",
+      "credentials": {
+        "telegramApi": {
+          "id": "J8ueyaRLQoYkYCwC",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/help",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "be91e0c9-05b3-4ead-8ffa-90d3b2a04e54"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "f576a6ef-36c7-40a8-aab1-147a243d1e74",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/add",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "d648eacc-c531-4ab6-bc23-ae244330ec2e",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/add",
+                    "operator": {
+                      "type": "string",
+                      "operation": "startsWith"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "d81be1ed-4d75-4bfb-b28b-a1fe941420ca",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/today ",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "334b18ca-cd8d-446c-a7cc-c0b755290889",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/week",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "81977a65-cfdb-4207-be53-c1aa3ab89ae3",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/month",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -80,
+        192
+      ],
+      "id": "d0ee035d-36d2-42be-9432-c5cc37944221",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "📝 Add a new task using this format: \nTask:  Date: YYYY-MM-DD \nTime: HH:mm \nDuration: minutes \nNotes: (optional)  \nExample:\n/add \nTask: Study IT223 \nDate: 2026-01-06 \nTime: 18:30 \nDuration: 90\nNotes: Chapter 5",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        496,
+        64
+      ],
+      "id": "c9a0895e-0481-497a-a088-8dd91f80e58b",
+      "name": "/add",
+      "webhookId": "dc92471a-4f1d-4f8c-a5e8-2dba0898a010",
+      "credentials": {
+        "telegramApi": {
+          "id": "J8ueyaRLQoYkYCwC",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "🤖 Tasky Commands\n /add - Add a new task \n/today - View today's tasks \n/week - View this week's tasks \n/month - View this month's tasks",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        496,
+        -96
+      ],
+      "id": "01a56737-35ca-4f0e-8e26-c5b793dfbf90",
+      "name": "/help",
+      "webhookId": "dc92471a-4f1d-4f8c-a5e8-2dba0898a010",
+      "credentials": {
+        "telegramApi": {
+          "id": "J8ueyaRLQoYkYCwC",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1aiN6TSd5JkZHqnU0cWBLPltGT48mgN4r3n-UPm-OtBQ",
+          "mode": "list",
+          "cachedResultName": "tasky",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1aiN6TSd5JkZHqnU0cWBLPltGT48mgN4r3n-UPm-OtBQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "tasks",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1aiN6TSd5JkZHqnU0cWBLPltGT48mgN4r3n-UPm-OtBQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "task": "={{ $json.task }}",
+            "date": "={{ $json.date }}",
+            "duration": "={{ $json.duration }}",
+            "time": "={{ $json.time }}",
+            "notes": "={{ $json.notes }}",
+            "created_at": "={{ $json.created_at }}",
+            "chat_id": "={{ $json.chat_id }}"
+          },
+          "matchingColumns": [
+            "chat_id"
+          ],
+          "schema": [
+            {
+              "id": "task",
+              "displayName": "task",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "time",
+              "displayName": "time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "duration",
+              "displayName": "duration",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "notes",
+              "displayName": "notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "chat_id",
+              "displayName": "chat_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        688,
+        256
+      ],
+      "id": "5ae0922c-54e9-4258-815f-dd3438a7d14c",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jpqBUxAgyVJbdQne",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1aiN6TSd5JkZHqnU0cWBLPltGT48mgN4r3n-UPm-OtBQ",
+          "mode": "list",
+          "cachedResultName": "tasky",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1aiN6TSd5JkZHqnU0cWBLPltGT48mgN4r3n-UPm-OtBQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "tasks",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1aiN6TSd5JkZHqnU0cWBLPltGT48mgN4r3n-UPm-OtBQ/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        496,
+        416
+      ],
+      "id": "617495b4-cf5e-4006-a123-a564fa95d321",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jpqBUxAgyVJbdQne",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const text = $json.message.text;\nconst chatId = $json.message.chat.id;\n\nfunction getValue(label) {\n  const regex = new RegExp(`${label}:\\\\s*(.+)`, 'i');\n  const match = text.match(regex);\n  return match ? match[1].trim() : '';\n}\n\nconst task = getValue('Task');\nconst date = getValue('Date');\nconst time = getValue('Time');\nconst duration = getValue('Duration');\nconst notes = getValue('Notes');\n\nif (!task || !date || !time || !duration) {\n  return [{\n    json: {\n      error: true,\n      chatId\n    }\n  }];\n}\n\nreturn [{\n  json: {\n    task,\n    date,\n    time,\n    duration,\n    notes,\n    chat_id: chatId,\n    created_at: new Date().toISOString()\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        496,
+        256
+      ],
+      "id": "df9d5c10-c6a1-4d8d-8e7a-8a50611d143e",
+      "name": "add format"
+    },
+    {
+      "parameters": {
+        "jsCode": "const chatId = $node[\"Telegram Trigger\"].json.message.chat.id;\nconst command = ($node[\"Telegram Trigger\"].json.message.text || \"\").trim();\n\nconst rows = $input.all().map(i => i.json);\n\nfunction pad(n){ return String(n).padStart(2,'0'); }\nfunction toYMD(d){ return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; }\n\nconst now = new Date(new Date().toLocaleString(\"en-US\", { timeZone: \"Asia/Riyadh\" }));\nconst today = toYMD(now);\n\n// Sunday as week start\nconst day = now.getDay(); // Sun=0..Sat=6\nconst weekStart = new Date(now);\nweekStart.setHours(0,0,0,0);\nweekStart.setDate(now.getDate() - day);\n\nconst weekEnd = new Date(weekStart);\nweekEnd.setDate(weekStart.getDate() + 6);\nweekEnd.setHours(23,59,59,999);\n\n\nconst monthStart = new Date(now.getFullYear(), now.getMonth(), 1); monthStart.setHours(0,0,0,0);\nconst monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0); monthEnd.setHours(23,59,59,999);\n\nfunction inRange(dateStr, start, end){\n  if (!dateStr) return false;\n\n  // Parse date as Asia/Riyadh midnight\n  const d = new Date(new Date(dateStr + \"T00:00:00\").toLocaleString(\"en-US\", { timeZone: \"Asia/Riyadh\" }));\n\n  return d >= start && d <= end;\n}\n\n\n// فلترة حسب الشخص (chat_id)\nlet filtered = rows.filter(r => String(r.chat_id) === String(chatId));\n\nlet title = \"\";\nif (command === \"/today\") {\n  filtered = filtered.filter(r => r.date === today);\n  title = `📌 Today's Tasks (${today})`;\n} else if (command === \"/week\") {\n  filtered = filtered.filter(r => inRange(r.date, weekStart, weekEnd));\n  title = `📅 This Week's Tasks (${toYMD(weekStart)} → ${toYMD(weekEnd)})`;\n} else if (command === \"/month\") {\n  filtered = filtered.filter(r => inRange(r.date, monthStart, monthEnd));\n  title = `🗓️ This Month's Tasks (${pad(now.getMonth()+1)}-${now.getFullYear()})`;\n} else {\n  return [{ json: { chat_id: chatId, out: \"Send /today, /week, or /month\" } }];\n}\n\nfiltered.sort((a,b) =>\n  (a.date || \"\").localeCompare(b.date || \"\") ||\n  (a.time || \"\").localeCompare(b.time || \"\")\n);\n\nif (filtered.length === 0) {\n  return [{ json: { chat_id: chatId, out: \"✅ No tasks found for this period.\" } }];\n}\n\nlet msg = `${title}\\n\\n`;\nfor (const t of filtered) {\n  msg += `• ${t.date} ${t.time} — ${t.task} (${t.duration} min)\\n`;\n  if (t.notes) msg += `  ↳ ${t.notes}\\n`;\n}\n\nreturn [{ json: { chat_id: chatId, out: msg } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        704,
+        416
+      ],
+      "id": "c4d3876f-d23d-4754-90b7-fefd0748cb45",
+      "name": "Format Tasks"
+    },
+    {
+      "parameters": {
+        "chatId": "={{$json.chat_id}}",
+        "text": "={{$json.out}}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        912,
+        416
+      ],
+      "id": "9571eeb3-47c6-474c-a401-467b176d4ddd",
+      "name": "Send a text message1",
+      "webhookId": "247a22a1-f07e-495d-8a95-f4488ac5f6dd",
+      "credentials": {
+        "telegramApi": {
+          "id": "J8ueyaRLQoYkYCwC",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "/help",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "/add",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "add format",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "/help": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "/add": {
+      "main": [
+        []
+      ]
+    },
+    "add format": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Format Tasks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Tasks": {
+      "main": [
+        [
+          {
+            "node": "Send a text message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "0322bb9e-871f-406e-9049-5fc3e88bf1c8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f9f414b0b87381100553492906a874a4b38c82b9760fa015ca0728db6074ef86"
+  },
+  "id": "3EEo1W1OxDRkRUbp",
+  "tags": [
+    {
+      "updatedAt": "2026-01-04T06:16:08.955Z",
+      "createdAt": "2026-01-04T06:16:08.955Z",
+      "id": "AuuVGEB1rZ2E3BUP",
+      "name": "education"
+    }
+  ]
+}
